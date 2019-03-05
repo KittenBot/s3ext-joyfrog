@@ -43,6 +43,8 @@ class Joyfrog {
         
         this.keyPressed = this.keyPressed.bind(this);
         this.runtime.on('KEY_PRESSED', this.keyPressed);
+        
+        this.infraData = null;
     }
 
     write (data, parser = null, key){
@@ -73,14 +75,19 @@ class Joyfrog {
             this.lineBuffer = lines.pop();
             for (const l of lines) {
                 const tmp = l.trim().split(' ');
-                const obj = this.reporter[tmp[1]];
-                if (obj){
-                    const res = obj[0];
-                    const parser = obj[1];
-                    let ret = 0;
-                    if (parser) ret = parser(tmp.slice(2).join(' '));
-                    res(ret);
-                    delete this.reporter[tmp[1]];
+                if (tmp[0] === 'M4'){
+                    this.infraData = tmp[1];
+                    this.runtime.startHats('JoyFrog_onInfraGet', {});
+                } else {
+                    const obj = this.reporter[tmp[1]];
+                    if (obj){
+                        const res = obj[0];
+                        const parser = obj[1];
+                        let ret = 0;
+                        if (parser) ret = parser(tmp.slice(2).join(' '));
+                        res(ret);
+                        delete this.reporter[tmp[1]];
+                    }
                 }
             }
         }
@@ -157,18 +164,6 @@ class Joyfrog {
                 },
                 '---',
                 {
-                    opcode: 'joystickValue',
-                    text: 'Joystick [DIR] Value',
-                    blockType: BlockType.REPORTER,
-                    arguments: {
-                        DIR: {
-                            type: ArgumentType.STRING,
-                            menu: 'dirs',
-                            defaultValue: 'X'
-                        }
-                    }
-                },
-                {
                     opcode: 'buzzerTone',
                     text: 'Buzzer Tone [FREQ] Hz [DELAY] ms',
                     blockType: BlockType.COMMAND,
@@ -204,19 +199,19 @@ class Joyfrog {
                             type: ArgumentType.STRING,
                             defaultValue: 'AABBCCDD'
                         }
-                    }
+                    },
+                    isEdgeActivated: false
                 },
                 {
                     opcode: 'onInfraGet',
                     text: 'On Infra Got',
                     blockType: BlockType.HAT,
-                    func: 'noop'
+                    func: 'hatFilter'
                 },
                 {
                     opcode: 'infradata',
                     text: 'Infra Data',
-                    blockType: BlockType.REPORTER,
-                    func: 'noop'
+                    blockType: BlockType.REPORTER
                 },
                 '---',
                 {
@@ -380,7 +375,11 @@ class Joyfrog {
         return this.write(`M3 ${args.DATA}\n`, null, 'M3');
     }
     
-
+    infradata (args){
+        const ret = this.infraData;
+        this.infraData = null; // consume data
+        return ret;
+    }
 }
 
 
