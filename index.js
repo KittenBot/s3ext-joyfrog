@@ -112,6 +112,9 @@ class Joyfrog {
             this.session.onclose = this.onclose;
             // notify gui connected
             this.runtime.emit(this.runtime.constructor.PERIPHERAL_CONNECTED);
+            setTimeout(() => {
+                sess.write('M0\r\n');
+            }, 2000);
         }).catch(err => {
             log.warn('connect peripheral fail', err);
         });
@@ -200,14 +203,14 @@ class Joyfrog {
                             type: ArgumentType.STRING,
                             defaultValue: 'AABBCCDD'
                         }
-                    },
-                    isEdgeActivated: false
+                    }
                 },
                 {
                     opcode: 'onInfraGet',
                     text: 'On Infra Got',
                     blockType: BlockType.HAT,
-                    func: 'hatFilter'
+                    func: 'hatFilter',
+                    isEdgeActivated: false
                 },
                 {
                     opcode: 'infradata',
