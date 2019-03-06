@@ -39,6 +39,7 @@ class Joyfrog {
         this.onmessage = this.onmessage.bind(this);
         this.onclose = this.onclose.bind(this);
         this.write = this.write.bind(this);
+        this.decoder = new TextDecoder();
         this.reporter = {};
         
         this.keyPressed = this.keyPressed.bind(this);
@@ -79,12 +80,12 @@ class Joyfrog {
                     this.infraData = tmp[1];
                     this.runtime.startHats('JoyFrog_onInfraGet', {});
                 } else {
-                    const obj = this.reporter[tmp[1]];
+                    const obj = this.reporter[tmp[0]];
                     if (obj){
                         const res = obj[0];
                         const parser = obj[1];
                         let ret = 0;
-                        if (parser) ret = parser(tmp.slice(2).join(' '));
+                        if (parser) ret = parser(tmp.slice(1).join(' '));
                         res(ret);
                         delete this.reporter[tmp[1]];
                     }
