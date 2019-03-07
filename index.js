@@ -234,7 +234,7 @@ class Joyfrog {
                             defaultValue: '1'
                         }
                     },
-                    func: 'noop'
+                    func: 'portdigiwr'
                 },
                 {
                     opcode: 'portdigird',
@@ -247,7 +247,7 @@ class Joyfrog {
                             defaultValue: '1'
                         }
                     },
-                    func: 'noop'
+                    func: 'portdigird'
                 },
                 {
                     opcode: 'portpwm',
@@ -383,6 +383,18 @@ class Joyfrog {
         const ret = this.infraData;
         this.infraData = null; // consume data
         return ret;
+    }
+    
+    portdigiwr (args){
+        if (this.session){
+            this.session.write(`M9 ${args.PORT} ${args.VAL}\n`);
+        }
+    }
+    
+    portdigird (args){
+        return this.write(`M8 ${args.PORT}\n`, ret => {
+            return ret.split(" ")[1] || 0;
+        }, 'M8')
     }
 }
 
