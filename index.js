@@ -30,6 +30,26 @@ const musicTone = {
     POWER_DOWN: 19
 };
 
+const HIDKeyMapping = {
+    [0x1e]: '1',
+    [0x1f]: '2',
+    [0x20]: '3',
+    [0x21]: '4',
+    [0x22]: '5',
+    [0x23]: '6',
+    [0x24]: '7',
+    [0x25]: '8',
+    [0x51]: 'up',
+    [0x52]: 'down',
+    [0x50]: 'left',
+    [0x4f]: 'right',
+    [0x2c]: 'space',
+    [0x1b]: 'x',
+    [0x1c]: 'y',
+    [0x04]: 'a',
+    [0x05]: 'b'
+};
+
 class Joyfrog {
     constructor (runtime){
         this.comm = runtime.ioDevices.comm;
@@ -44,6 +64,8 @@ class Joyfrog {
         
         this.keyPressed = this.keyPressed.bind(this);
         this.runtime.on('KEY_PRESSED', this.keyPressed);
+        this.joyX = 0;
+        this.joyY = 0;
         
         this.infraData = null;
     }
@@ -76,9 +98,15 @@ class Joyfrog {
             this.lineBuffer = lines.pop();
             for (const l of lines) {
                 const tmp = l.trim().split(' ');
-                if (tmp[0] === 'M4'){
+                if (tmp[0] === 'M4'){ // infra rx
                     this.infraData = tmp[1];
                     this.runtime.startHats('JoyFrog_onInfraGet', {});
+                } else if (tmp[0] === 'M1'){ // joystick echo
+                    this.keyPressed(HIDKeyMapping[parseInt(tmp[1])]);
+                    this.joyX = parseInt(tmp[2]);
+                    this.joyY = parseInt(tmp[3]);
+                } else if (tmp[0] === 'M2'){ // button pressed
+                    this.keyPressed(HIDKeyMapping[parseInt(tmp[1])]);
                 } else {
                     const obj = this.reporter[tmp[0]];
                     if (obj){
