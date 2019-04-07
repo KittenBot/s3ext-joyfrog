@@ -2,5 +2,6 @@
     "name": "JoyFrog",
     "type": "scratch3",
     "extensions": ["JoyFrog"],
-    "image": "joyfrog.jpg"
+    "image": "joyfrog.jpg",
+    "hex": "joyfrog.hex"
 }
