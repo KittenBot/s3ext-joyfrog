@@ -279,7 +279,7 @@ class Joyfrog {
                 },
                 {
                     opcode: 'portpwm',
-                    text: 'Port [PORT] pwm [VAL]',
+                    text: 'Port [PORT] pwm pulse [T0]us Period [T1]us',
                     blockType: BlockType.COMMAND,
                     arguments: {
                         PORT: {
@@ -287,13 +287,16 @@ class Joyfrog {
                             menu: 'port',
                             defaultValue: '1'
                         },
-                        VAL: {
+                        T0: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 100
+                            defaultValue: 1000
+                        },
+                        T1: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 20000
                         }
                     },
-                    blockDisabled: true,
-                    func: 'noop'
+                    func: 'portpwm'
                 },
                 {
                     opcode: 'portanalog',
@@ -306,14 +309,13 @@ class Joyfrog {
                             defaultValue: '1'
                         }
                     },
-                    blockDisabled: true,
-                    func: 'noop'
+                    func: 'portanalog'
                 }
             ],
             menus: {
                 port: [
-                    {text: 'Port1', value: '1'},
-                    {text: 'Port2', value: '2'}
+                    {text: 'Port3', value: '1'},
+                    {text: 'Port4', value: '2'}
                 ],
                 keys: ['X', 'Y', 'A', 'B',
                     {text: '↑', value: 'UP'},
@@ -349,7 +351,7 @@ class Joyfrog {
                     infradata: '红外解码数据',
                     portdigiwr: '端口 [PORT] 写 [VAL]',
                     portdigird: '端口 [PORT] 读',
-                    portpwm: '端口 [PORT] pwm [VAL]',
+                    portpwm: '端口 [PORT] pwm 脉冲 [T0]us 周期 [T1]us',
                     portanalog: '端口 [PORT] 模拟值'
                 }
             }
@@ -424,6 +426,19 @@ class Joyfrog {
             return ret.split(" ")[1] || 0;
         }, 'M8')
     }
+    
+    portpwm (args){
+        if (this.session){
+            this.session.write(`M12 ${args.PORT} ${args.T0} ${args.T1}\n`);
+        }
+    }
+    
+    portanalog (args){
+        return this.write(`M11 ${args.PORT}\n`, ret => {
+            return ret.split(" ")[1] || 0;
+        }, 'M11')
+    }
+    
 }
 
 
