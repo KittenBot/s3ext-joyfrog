@@ -411,7 +411,7 @@ class Joyfrog {
     
     infradata (args){
         const ret = this.infraData;
-        this.infraData = null; // consume data
+        // this.infraData = null; // consume data
         return ret;
     }
     
