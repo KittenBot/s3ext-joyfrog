@@ -1,6 +1,7 @@
 {
     "name": "JoyFrog",
     "type": "scratch3",
+    "flash": "uf2",
     "extensions": ["JoyFrog"],
     "image": "joyfrog.jpg",
     "hex": "joyfrog.hex"
