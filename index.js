@@ -293,10 +293,27 @@ class Joyfrog {
                         },
                         T1: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 20000
+                            defaultValue: 50000
                         }
                     },
                     func: 'portpwm'
+                },
+                {
+                    opcode: 'portServo',
+                    text: 'Port [PORT] Servo [DEGREE]',
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        PORT: {
+                            type: ArgumentType.STRING,
+                            menu: 'port',
+                            defaultValue: '1'
+                        },
+                        DEGREE: {
+                            type: ArgumentType.SLIDERSERVO,
+                            defaultValue: 90
+                        }
+                    },
+                    func: 'portServo'
                 },
                 {
                     opcode: 'portanalog',
@@ -352,6 +369,7 @@ class Joyfrog {
                     portdigiwr: '端口 [PORT] 写 [VAL]',
                     portdigird: '端口 [PORT] 读',
                     portpwm: '端口 [PORT] pwm 脉冲 [T0]us 周期 [T1]us',
+                    portServo: '端口 [PORT] 舵机角度 [DEGREE]',
                     portanalog: '端口 [PORT] 模拟值'
                 }
             }
@@ -430,6 +448,13 @@ class Joyfrog {
     portpwm (args){
         if (this.session){
             this.session.write(`M12 ${args.PORT} ${args.T0} ${args.T1}\n`);
+        }
+    }
+    
+    portServo (args){
+        const t0 = Math.round(args.DEGREE*50/9+1000);
+        if (this.session){
+            this.session.write(`M12 ${args.PORT} ${t0} 50000\n`);
         }
     }
     

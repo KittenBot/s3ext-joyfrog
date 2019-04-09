@@ -1,5 +1,6 @@
 {
     "name": "JoyFrog",
+    "version": "1.4",
     "type": "scratch3",
     "flash": "uf2",
     "extensions": ["JoyFrog"],
