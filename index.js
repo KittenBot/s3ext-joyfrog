@@ -435,7 +435,7 @@ class Joyfrog {
     
     portanalog (args){
         return this.write(`M11 ${args.PORT}\n`, ret => {
-            return ret.split(" ")[1] || 0;
+            return parseInt(ret, 10);
         }, 'M11')
     }
     
