@@ -415,10 +415,6 @@ class Joyfrog {
     
     infraSend (args){
         const data = args.DATA;
-        if (data.length !== 8){
-            vm.emit('showAlert', {type: 'error', msg: `length should be 8 bytes`});
-            return;
-        }
         if (!/^[0-9a-fA-F]+$/.test(data)){
             vm.emit('showAlert', {type: 'error', msg: `only hex string support`});
             return;
