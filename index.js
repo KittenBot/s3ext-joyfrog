@@ -47,7 +47,16 @@ const HIDKeyMapping = {
     [0x1b]: 'x',
     [0x1c]: 'y',
     [0x04]: 'a',
-    [0x05]: 'b'
+    [0x05]: 'b',
+    // player2
+    [0x17]: 't',
+    [0x09]: 'f',
+    [0x0a]: 'g',
+    [0x0b]: 'h',
+    [0x0c]: 'i',
+    [0x0d]: 'j',
+    [0x0e]: 'k',
+    [0x0f]: 'l'
 };
 
 class Joyfrog {
@@ -211,6 +220,19 @@ class Joyfrog {
                     }
                 },
                 {
+                    opcode: 'notefreq',
+                    text: '[NOTE]',
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        NOTE: {
+                            type: ArgumentType.STRING,
+                            menu: 'pads',
+                            defaultValue: '1'
+                        }
+                    },
+                    func: 'notefreq'
+                },
+                {
                     opcode: 'buzzerMusic',
                     text: 'Buzzer Music [MUSIC]',
                     blockType: BlockType.COMMAND,
@@ -339,7 +361,9 @@ class Joyfrog {
                     {text: '↓', value: 'DOWN'},
                     {text: '←', value: 'LEFT'},
                     {text: '→', value: 'RIGHT'},
-                    'SPACE', '1', '2', '3', '4', '5', '6', '7', '8'],
+                    'SPACE', '1', '2', '3', '4', '5', '6', '7', '8',
+                    'T', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                ],
                 pads: [
                     {text: 'Do', value: '1'},
                     {text: 'Re', value: '2'},
@@ -405,6 +429,11 @@ class Joyfrog {
     
     buzzerTone (args){
         return this.write(`M5 ${args.FREQ} ${args.DELAY}\n`, null, 'M5');
+    }
+    
+    notefreq (args){
+        const noteFreqMap = [262, 294, 330, 349, 392, 440, 494, 523];
+        return noteFreqMap[parseInt(args.NOTE)-1];
     }
     
     buzzerMusic (args){
