@@ -395,7 +395,7 @@ class Joyfrog {
                     portpwm: '端口 [PORT] pwm 脉冲 [T0]us 周期 [T1]us',
                     portServo: '端口 [PORT] 舵机角度 [DEGREE]',
                     portanalog: '端口 [PORT] 模拟值'
-                }
+                },
                 'zh-tw': {
                     whenKeyPressed: '當 按鈕[KEY] 按下',
                     whenPadTouched: '當 鍵盤[PAD] 觸碰',
