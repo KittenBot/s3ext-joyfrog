@@ -1,4 +1,4 @@
-// create by scratch3-extension generator
+﻿// create by scratch3-extension generator
 const ArgumentType = Scratch.ArgumentType;
 const BlockType = Scratch.BlockType;
 const formatMessage = Scratch.formatMessage;
@@ -395,6 +395,21 @@ class Joyfrog {
                     portpwm: '端口 [PORT] pwm 脉冲 [T0]us 周期 [T1]us',
                     portServo: '端口 [PORT] 舵机角度 [DEGREE]',
                     portanalog: '端口 [PORT] 模拟值'
+                }
+                'zh-tw': {
+                    whenKeyPressed: '當 按鈕[KEY] 按下',
+                    whenPadTouched: '當 鍵盤[PAD] 觸碰',
+                    joystickValue: '搖桿 [DIR] 值',
+                    buzzerTone: '蜂鳴器 音調 [FREQ] Hz [DELAY] ms',
+                    buzzerMusic: '蜂鳴器 播放音樂 [MUSIC]',
+                    infraSend: '紅外線發射 [DATA]訊號',
+                    onInfraGet: '當收到紅外線訊號',
+                    infradata: '紅外線解碼數據',
+                    portdigiwr: '埠口 [PORT] 寫 [VAL]',
+                    portdigird: '埠口 [PORT] 讀',
+                    portpwm: '埠口 [PORT] pwm 脈沖 [T0]us 週期 [T1]us',
+                    portServo: '埠口 [PORT] 舵機角度 [DEGREE]',
+                    portanalog: '埠口 [PORT] 類比值'
                 }
             }
         };
