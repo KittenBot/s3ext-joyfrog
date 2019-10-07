@@ -77,6 +77,12 @@ class Joyfrog {
         this.joyY = 0;
         
         this.infraData = null;
+
+        const viewedTutorial = localStorage.getItem("showed-joyfrog-tutorial")
+        if (!viewedTutorial){
+            runtime.showDeck('joyfrog-tutorial');
+            localStorage.setItem("showed-joyfrog-tutorial", 1);
+        }
     }
 
     write (data, parser = null, key){
