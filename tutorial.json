@@ -1,0 +1,25 @@
+{
+    "id": "joyfrog-tutorial",
+    "name": "青蛙手柄教程",
+    "img": "01.png",
+    "tags": ["robot", "hardware", "kittenblock"],
+    "steps": [
+        {
+            "title": "01插上呱比特",
+            "image": "01.png"
+        },
+        {
+            "title": "02硬件选择",
+            "image": "02.gif"
+        },
+        {
+            "title": "03编写程序",
+            "image": "03.gif"
+        },
+        {
+            "title": "04实物控制",
+            "image": "04.gif"
+        }
+    ]
+
+}
